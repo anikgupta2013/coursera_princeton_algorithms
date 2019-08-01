@@ -1,0 +1,102 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class FastCollinearPoints {
+	private Point[] points;
+	private LineSegment[] segments;
+	private int numSegments = 0;
+
+	public FastCollinearPoints(Point[] pts){
+		// finds all line segments containing 4 or more points
+		if(pts == null) throw new java.lang.IllegalArgumentException();
+		points = new Point[pts.length];
+		for(int i = 0; i < pts.length; i++){
+			Point p = pts[i];
+			if(p == null) throw new java.lang.IllegalArgumentException();
+			for(int j = 0; j < i; j++){
+				if(points[j].compareTo(p) == 0) throw new java.lang.IllegalArgumentException();
+			}
+			points[i] = p;
+		}
+		ArrayList<LineSegment> segs = new ArrayList<LineSegment>();
+		for(int i = 0; i < points.length; i++){
+			Point p = points[i];
+			Arrays.sort(points);
+			Arrays.sort(points, p.slopeOrder());
+			int num = 0;
+			double slope = Double.MIN_VALUE;
+			boolean ad = false;
+			for(int j = 0; j < points.length; j++){
+				//if(p.slopeTo(points[j]) >= 0){
+				if(points[j].compareTo(p) < 0) ad = true;
+					if(p.slopeTo(points[j]) == slope || (slope == Double.POSITIVE_INFINITY && p.slopeTo(points[j]) == Double.POSITIVE_INFINITY)){ // is there a point with a -slope
+						if(!ad){
+							num++;
+						}
+						else num = 0;
+					}
+					else{
+						if(num > 2){
+							numSegments++;
+							//segs.add(new LineSegment(min(p, min(points, j-num, j-1)), max(p, max(points, j-num, j-1))));
+							segs.add(new LineSegment(p, points[j-1]));//points[j-num], points[j-1]));
+						}
+						slope = p.slopeTo(points[j]);
+						if(points[j].compareTo(p) < 0) ad = true;
+						else ad = false;
+						num = 1;
+					}
+				//}
+			}
+		}
+		segments = new LineSegment[numSegments];
+		segments = segs.toArray(segments);
+	}
+	public int numberOfSegments(){
+		// the number of line segments
+		return numSegments;
+	}
+	public LineSegment[] segments(){
+		// the line segments
+		LineSegment[] s = new LineSegment[segments.length];
+		s = segments.clone();
+		return s;
+	}
+	
+	private Point min(Point a, Point b){
+		if(a.compareTo(b) < 0) return a;
+		return b;
+	}
+	
+	private Point max(Point a, Point b){
+		if(a.compareTo(b) > 0) return a;
+		return b;
+	}
+	
+	private Point min(Point[] a, int low, int high){
+		Point l = null;
+		if(low <= high){
+			l = a[low];
+		}
+		for(int i = low; i <= high; i++){
+			if(l.compareTo(a[i]) < 0){
+				l = a[i];
+			}
+		}
+		return l;
+	}
+	private Point max(Point[] a, int low, int high){
+		Point l = null;
+		if(low <= high){
+			l = a[low];
+		}
+		for(int i = low; i <= high; i++){
+			if(l.compareTo(a[i]) > 0){
+				l = a[i];
+			}
+		}
+		return l;
+	}
+	
+	
+}

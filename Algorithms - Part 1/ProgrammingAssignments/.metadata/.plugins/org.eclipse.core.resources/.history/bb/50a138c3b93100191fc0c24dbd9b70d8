@@ -1,0 +1,115 @@
+import java.util.Arrays;
+import java.util.Iterator;
+
+import edu.princeton.cs.algs4.StdRandom;
+
+public class RandomizedQueue<Item> implements Iterable<Item> {
+	private Item[] q;
+	private int first;
+	private int last;
+	private int n; // size
+	public RandomizedQueue() {                           // construct an empty randomized queue
+		q = (Item[]) new Object[2];
+		first = 0;
+		last = -1;
+		n = 0;
+	}
+
+
+	public boolean isEmpty() {                // is the queue empty?
+		return n == 0;
+	}
+	public int size() {                       // return the number of items on the queue
+		return n;
+	}
+	public void enqueue(Item item) {          // add the item
+		// System.out.println(Arrays.toString(q));
+		if (item == null) {
+			throw new java.lang.IllegalArgumentException();
+		}
+		if (n == q.length) {
+			resize(q.length*2);
+		}
+		if (last == q.length-1) {
+			last = -1;
+		}
+		q[++last] = item;
+		// System.out.println(Arrays.toString(q));
+		n++;
+
+	}
+	public Item dequeue() {                   // remove and return a random item
+		if (isEmpty()) {
+			throw new java.util.NoSuchElementException();
+		}
+		// System.out.println("Working");
+		int index = StdRandom.uniform(n);
+		index = (first + index) % (q.length);
+		Item val = q[index];
+		q[index] = q[last];
+		q[last--] = null;
+		if (last < 0) {
+			last += q.length;
+		}
+		n--;
+
+		return val;
+	}
+	public Item sample() {                     // return (but do not remove) a random item
+		if (isEmpty()) {
+			throw new java.util.NoSuchElementException();
+		}
+		int index = StdRandom.uniform(n);
+		index = (first + index) % (q.length);
+		return q[index];
+	}
+	private void resize (int newSize) {
+		Item[] temp = (Item[]) new Object[newSize];
+		for (int i = 0; i < n; i++) {
+			temp[i] = q[(first+i) % q.length];
+		}
+		q = temp;
+		first = 0;
+		last = n-1;
+	}
+	public Iterator<Item> iterator() {         // return an independent iterator over items in random order
+		return new ListIterator<Item>(q, first, last, n);
+	}
+	private class ListIterator<Item> implements Iterator<Item> {
+		private Item[] temp;
+		private int first;
+		private int last;
+		private int n; // size
+		public ListIterator(Item[] arr, int first, int last, int n) {
+			temp = arr;
+			this.first = first;
+			this.last = last;
+			this.n = n;
+		}
+		public void remove()      { throw new UnsupportedOperationException();  }
+		@Override
+		public boolean hasNext() {
+			return n > 0;
+		}
+
+		@Override
+		public Item next() {
+			if (!hasNext()) throw new java.util.NoSuchElementException();
+			int index = StdRandom.uniform(n);
+			index = (first + index) % (q.length);
+			Item val = temp[index];
+			temp[index] = temp[last];
+			temp[last--] = null;
+			if (last < 0) {
+				last += temp.length;
+			}
+			n--;
+
+			return val;
+		}
+
+	}
+	public static void main(String[] args) {   // unit testing (optional)
+
+	}
+}

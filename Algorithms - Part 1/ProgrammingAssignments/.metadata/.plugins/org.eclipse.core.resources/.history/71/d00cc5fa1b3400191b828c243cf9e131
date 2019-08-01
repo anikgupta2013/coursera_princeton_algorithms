@@ -1,0 +1,314 @@
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
+public class Percolation {
+	private int n;
+	private int numOpen = 0;
+	private boolean[] isOpen;
+	private boolean[] connectedToTop;
+	private boolean[] connectedToBottom;
+	/*private char[][] grid;
+	private static char CLOSED = '0';
+	private static char OPEN = '1';
+	private static char BOTTOM = '2';*/
+	private boolean percolates = false;
+	//private WeightedQuickUnionUF uf;
+	private WeightedQuickUnionUF uf2;
+	public Percolation(int n){                // create n-by-n grid, with all sites blocked
+		if (n <= 0){
+			throw new java.lang.IllegalArgumentException();
+		}
+		this.n = n;
+		//uf = new WeightedQuickUnionUF(n*n+2);
+		uf2 = new WeightedQuickUnionUF(n*n);
+
+		//grid = new char[n+1][n+1];
+		isOpen = new boolean[n*n];
+		connectedToTop = new boolean[n*n];
+		connectedToBottom = new boolean[n*n];
+		for(int i = 0; i < n*n; i++){
+			isOpen[i] = false;
+			connectedToTop[i] = false;
+			connectedToBottom[i] = false;
+		}
+		percolates = false;
+	}
+	public void open(int row, int col){   // open site (row, col) if it is not open already
+		if(row > n || col > n || row <  1 || col < 1){
+			throw new java.lang.IllegalArgumentException();
+		}
+		int i = xyTo1D(row, col);
+		if(!isOpen[i]){
+			isOpen[i] = true;
+			numOpen++;
+			boolean top = false, bottom = false;
+			//if(row == n) grid[row][col] = BOTTOM;
+			if(row - 1 > 0){
+				if(isOpen[i-n]){
+					if (connectedToTop[uf2.find(i-n)] || connectedToTop[uf2.find(i)] ) {   
+		                 top = true;
+		            }
+					if (connectedToBottom[uf2.find(i-n)] || connectedToBottom[uf2.find(i)] ) {   
+		                 bottom = true;
+		            }
+					//uf.union(xyTo1D(row-1, col), xyTo1D(row, col));
+					uf2.union(xyTo1D(row-1, col), xyTo1D(row, col));
+					/*if (grid[row-1][col] == BOTTOM) {
+						grid[row][col] = BOTTOM;
+					}*/
+					
+				}
+			}
+			if(col - 1 > 0){
+				if(isOpen[i-1]){
+					if (connectedToTop[uf2.find(i-1)] || connectedToTop[uf2.find(i)] ) {   
+		                 top = true;
+		            }
+					if (connectedToBottom[uf2.find(i-1)] || connectedToBottom[uf2.find(i)] ) {   
+		                 bottom = true;
+		            }
+					//uf.union(xyTo1D(row, col-1), xyTo1D(row, col));
+					uf2.union(xyTo1D(row, col-1), xyTo1D(row, col));
+					/*if (grid[row][col-1] == BOTTOM) {
+						grid[row][col] = BOTTOM;
+					}*/
+					
+				}
+			}
+			if(row + 1 <= n){
+				if(isOpen[i+n]){
+					//uf.union(xyTo1D(row+1, col), xyTo1D(row, col));
+					if (connectedToTop[uf2.find(i+n)] || connectedToTop[uf2.find(i)] ) {   
+		                 top = true;
+		            }
+					if (connectedToBottom[uf2.find(i+n)] || connectedToBottom[uf2.find(i)] ) {   
+		                 bottom = true;
+		            }
+					uf2.union(xyTo1D(row+1, col), xyTo1D(row, col));
+					
+					/*if (grid[row+1][col] == BOTTOM) {
+						grid[row][col] = BOTTOM;
+					}*/
+				}
+			}
+			if(col + 1 <= n){
+				if(isOpen[i+1]){
+					if (connectedToTop[uf2.find(i+1)] || connectedToTop[uf2.find(i)] ) {   
+		                 top = true;
+		            }
+					if (connectedToBottom[uf2.find(i+1)] || connectedToBottom[uf2.find(i)] ) {   
+		                 bottom = true;
+		            }
+					//uf.union(xyTo1D(row, col+1), xyTo1D(row, col));
+					uf2.union(xyTo1D(row, col+1), xyTo1D(row, col));
+					/*if (grid[row][col+1] == BOTTOM) {
+						grid[row][col] = BOTTOM;
+					}*/
+					
+				}
+			}
+			/*if(grid[row][col] == BOTTOM){
+				if(row - 1 > 0 && isOpen(row-1, col)){
+					grid[row-1][col] = BOTTOM;
+				}
+				if(col - 1 > 0 && isOpen(row, col-1)){
+					grid[row][col-1] = BOTTOM;
+				}
+				if(col + 1 <= n && isOpen(row, col+1)){
+					grid[row][col+1] = BOTTOM;
+				}
+				if(row + 1 <= n && isOpen(row+1, col)){
+					grid[row+1][col] = BOTTOM;
+				}
+			}*/
+			if(row == 1){
+				//uf.union(xyTo1D(row, col), 0);
+				//uf2.union(xyTo1D(row, col), 0);
+				top = true;
+			}
+			if(row == n){
+				bottom = true;
+			}
+			connectedToBottom[uf2.find(i)] = bottom;
+			connectedToTop[uf2.find(i)] = top;
+			//if(isFull(row, col) && grid[row][col] == BOTTOM) percolates = true;
+			if(top && bottom) percolates = true;
+			/*if(row == n){
+				uf.union(xyTo1D(row, col), n*n+1);
+				//percolates = true;
+			}*/
+		}
+	}
+
+	public boolean isOpen(int row, int col){	// is site (row, col) open?
+		if(row > n || col > n || row <  1 || col < 1){
+			throw new java.lang.IllegalArgumentException();
+		}
+		return isOpen[xyTo1D(row, col)];
+	}
+	public boolean isFull(int row, int col){	// is site (row, col) full?
+		if(row > n || col > n || row <  1 || col < 1){
+			throw new java.lang.IllegalArgumentException();
+		}
+		return connectedToTop[uf2.find(xyTo1D(row, col))];//uf2.connected(0, xyTo1D(row, col));
+	}
+	
+	public int numberOfOpenSites(){       // number of open sites
+		return numOpen;
+	}
+	public boolean percolates(){              // does the system percolate?
+		return percolates;
+		//return uf.connected(n*n+1, 0);
+		//return percolates;
+	}
+	private int xyTo1D(int row, int col){
+		return (row-1)*(n-1) + col;
+	}
+
+	public static void main(String[] args){   // test client (optional)
+//				File input = new File("percolation/input50.txt");
+//				
+//				try {
+//					
+//					Scanner in = new Scanner(input);
+//					
+//					Percolation p = null;
+//					if(in.hasNext()){
+//						int i =in.nextInt(); 
+//						p = new Percolation(i);
+//					}else{
+//						p = new Percolation(0);
+//					}
+//					while(in.hasNextInt()){
+//						int a = in.nextInt();
+//						int b = in.nextInt();
+//						p.open(a, b);
+//					}
+//					System.out.println(p.percolates());
+//				} catch (FileNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+	}
+}
+
+
+
+
+
+
+/*public class Percolation {
+	private int n;
+	private int numOpen = 0;
+	private boolean[][] grid;
+	//private boolean percolates = false;
+	private WeightedQuickUnionUF uf;
+	private WeightedQuickUnionUF uf2;
+	public Percolation(int n){                // create n-by-n grid, with all sites blocked
+		if (n <= 0){
+			throw new java.lang.IllegalArgumentException();
+		}
+		this.n = n;
+		uf = new WeightedQuickUnionUF(n*n+2);
+		uf2 = new WeightedQuickUnionUF(n*n+2);
+
+		grid = new boolean[n+1][n+1];
+		for(int i = 1; i <= n; i++){
+			for(int j = 0; j <= n; j++){
+				grid[i][j] = false;
+			}
+		}
+	}
+	public void open(int row, int col){   // open site (row, col) if it is not open already
+		if(row > n || col > n || row <  1 || col < 1){
+			throw new java.lang.IllegalArgumentException();
+		}
+		if(!grid[row][col]){
+			grid[row][col] = true;
+			numOpen++;
+
+			if(row - 1 > 0){
+				if(isOpen(row-1, col)){
+					uf.union(xyTo1D(row-1, col), xyTo1D(row, col));
+					uf2.union(xyTo1D(row-1, col), xyTo1D(row, col));
+				}
+			}
+			if(col - 1 > 0){
+				if(isOpen(row, col-1)){
+					uf.union(xyTo1D(row, col-1), xyTo1D(row, col));
+					uf2.union(xyTo1D(row, col-1), xyTo1D(row, col));
+				}
+			}
+			if(row + 1 <= n){
+				if(isOpen(row+1, col)){
+					uf.union(xyTo1D(row+1, col), xyTo1D(row, col));
+					uf2.union(xyTo1D(row+1, col), xyTo1D(row, col));
+				}
+			}
+			if(col + 1 <= n){
+				if(isOpen(row, col+1)){
+					uf.union(xyTo1D(row, col+1), xyTo1D(row, col));
+					uf2.union(xyTo1D(row, col+1), xyTo1D(row, col));
+				}
+			}
+			if(row == 1){
+				uf.union(xyTo1D(row, col), 0);
+				uf2.union(xyTo1D(row, col), 0);
+			}
+			if(row == n){
+				uf.union(xyTo1D(row, col), n*n+1);
+				//percolates = true;
+			}
+		}
+	}
+
+	public boolean isOpen(int row, int col){	// is site (row, col) open?
+		if(row > n || col > n || row <  1 || col < 1){
+			throw new java.lang.IllegalArgumentException();
+		}
+		return grid[row][col];
+	}
+	public boolean isFull(int row, int col){	// is site (row, col) full?
+		if(row > n || col > n || row <  1 || col < 1){
+			throw new java.lang.IllegalArgumentException();
+		}
+		return uf2.connected(0, xyTo1D(row, col));
+	}
+	
+	public int numberOfOpenSites(){       // number of open sites
+		return numOpen;
+	}
+	public boolean percolates(){              // does the system percolate?
+		//return percolates;
+		return uf.connected(n*n+1, 0);
+		//return percolates;
+	}
+	private int xyTo1D(int row, int col){
+		return (row-1)*n + col;
+	}
+
+	public static void main(String[] args){   // test client (optional)
+//				File input = new File("percolation/input50.txt");
+//				
+//				try {
+//					
+//					Scanner in = new Scanner(input);
+//					
+//					Percolation p = null;
+//					if(in.hasNext()){
+//						int i =in.nextInt(); 
+//						p = new Percolation(i);
+//					}else{
+//						p = new Percolation(0);
+//					}
+//					while(in.hasNextInt()){
+//						int a = in.nextInt();
+//						int b = in.nextInt();
+//						p.open(a, b);
+//					}
+//					System.out.println(p.percolates());
+//				} catch (FileNotFoundException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+	}
+}*/

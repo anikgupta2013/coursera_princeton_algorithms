@@ -1,0 +1,47 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
+
+public class Permutation {
+	public static void main(String[] args) {
+		int k = Integer.parseInt(args[0]);//StdIn.readInt();
+		RandomizedQueue<String> queue = new RandomizedQueue<String>();
+		int i = 0;
+		while (!StdIn.isEmpty()) {
+			try {
+				String a = StdIn.readString();
+				i++;
+				if (i > k){
+					if(StdRandom.bernoulli(1.0*k/i)){
+						queue.dequeue();
+						queue.enqueue(a);
+					}
+				}
+				else {
+					queue.enqueue(a);
+				}
+				/*if(queue.size() > k){
+					queue.dequeue();
+				}*/
+			} catch (NoSuchElementException e) {
+				break;
+			}
+			
+			//System.out.println(a);
+			
+			 
+		}
+		Iterator<String> it = queue.iterator();
+		while (it.hasNext()) { StdOut.println(it.next()); }
+		/*(String[] list = StdIn.readAllStrings();
+		for(int i = 0; i < list.length; i++){
+			queue.enqueue(list[i]);
+		}*/
+		/*for (int i = 0; i < k; i++) {
+			StdOut.println(queue.dequeue());
+		}*/
+	}
+}

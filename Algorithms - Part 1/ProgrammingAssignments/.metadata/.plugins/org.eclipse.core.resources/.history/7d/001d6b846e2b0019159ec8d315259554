@@ -1,0 +1,120 @@
+import edu.princeton.cs.algs4.*;
+public class Solver {
+	private MinPQ<SearchNode> pq = new MinPQ<SearchNode>();
+	private MinPQ<SearchNode> pqt = new MinPQ<SearchNode>();
+	private Stack<Board> solution = new Stack<Board>();
+	private boolean solvable = true;
+	private int moves = 0;
+    public Solver(Board initial)           // find a solution to the initial board (using the A* algorithm)
+    {
+    	
+    	pq.insert(new SearchNode(initial, moves, null));
+    	//System.out.println(initial.twin());
+    	pqt.insert(new SearchNode(initial.twin(), moves, null));
+    	System.out.println("hello");
+    	System.out.println(pqt.min());
+    	SearchNode removed = pq.delMin();
+    	SearchNode removedt = pqt.delMin();
+    	System.out.println("REMOVED: "  +removed.getBoard());
+    	System.out.println("REMOVEDT: "  +removedt.getBoard());
+    	//System.out.println(removed.getBoard().isGoal() + " " + removed.getPriority());
+    	while(!removed.getBoard().isGoal() && !removedt.getBoard().isGoal()){
+    		moves++;
+    		//System.out.println("hello");
+	    	for(Board neighbor : removed.getBoard().neighbors()){
+	    		if(!neighbor.equals(removed.getPred())){
+	    			pq.insert(new SearchNode(neighbor, moves, removed));
+	    		}
+	    		//System.out.println("hello");
+	    	}
+	    	for(Board neighbor : removedt.getBoard().neighbors()){
+	    		if(!neighbor.equals(removedt.getPred())){
+	    			pqt.insert(new SearchNode(neighbor, moves, removedt));
+	    		}
+	    	}
+	    	removed = pq.delMin();
+	    	removedt = pqt.delMin();
+	    	
+	    	System.out.println("REMOVED: "  +removed.getBoard());
+	    	System.out.println("REMOVEDT: "  +removedt.getBoard());
+    	}
+    	if(removedt.getBoard().isGoal()) solvable = false; // if the twin board is solved first
+    	else{
+    		while(removed != null){
+	    		solution.push(removed.getBoard());
+	    		removed = removed.getPred();
+    		}
+    	}
+    }
+    public boolean isSolvable()            // is the initial board solvable?
+    {
+    	return solvable;
+    }
+    public int moves()                     // min number of moves to solve initial board; -1 if unsolvable
+    {
+    	if(!solvable) return -1;
+    	else return moves;
+    }
+    public Iterable<Board> solution()      // sequence of boards in a shortest solution; null if unsolvable
+    {
+    	if(!solvable) return null;
+    	else{
+    		return solution;
+    	}
+    }
+    public static void main(String[] args) // solve a slider puzzle (given below)
+    {
+	    // create initial board from file
+	    In in = new In(args[0]);
+	    int n = in.readInt();
+	    int[][] blocks = new int[n][n];
+	    for (int i = 0; i < n; i++)
+	        for (int j = 0; j < n; j++){
+	            blocks[i][j] = in.readInt();
+	            System.out.println(blocks[i][j]);
+	        }
+	    Board initial = new Board(blocks);
+
+	    // solve the puzzle
+	    Solver solver = new Solver(initial);
+
+	    // print solution to standard output
+	    if (!solver.isSolvable())
+	        StdOut.println("No solution possible");
+	    else {
+	        StdOut.println("Minimum number of moves = " + solver.moves());
+	        for (Board board : solver.solution())
+	            StdOut.println(board);
+	    }
+    }
+    private class SearchNode implements Comparable<SearchNode>{
+    	private Board b;
+    	private int moves;
+    	private SearchNode pred;
+    	private int manhattan;
+    	private int priority;
+    	
+    	public SearchNode(Board b, int moves, SearchNode pred){
+    		this.b = b;
+    		this.moves = moves;
+    		this.pred = pred;
+    		manhattan = b.manhattan();
+    		priority = b.hamming();
+    	}
+    	public String toString(){
+    		return b.toString();
+    	}
+    	public Board getBoard(){ return b;}
+    	public int getMoves(){ return moves;}
+    	public SearchNode getPred(){ return pred;}
+    	public int getManhattan() { return manhattan;}
+    	public int getPriority() { return priority;}
+
+		@Override
+		public int compareTo(SearchNode o) {
+			// TODO Auto-generated method stub
+			return  (this.priority - o.getPriority()) + (this.getMoves() - o.getMoves());
+		}
+    	
+    }
+}

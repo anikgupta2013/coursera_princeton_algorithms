@@ -1,0 +1,77 @@
+import java.util.Iterator;
+
+public class RandomizedQueue<Item> implements Iterable<Item> {
+	private Node<Item> first;
+	private Node<Item> last;
+	private int n; // size
+	public RandomizedQueue(){                           // construct an empty randomized queue
+		first = null;
+		last = null;
+		n = 0;
+	}
+	private class Node<Item>{
+		private Item item;
+		private Node<Item> next;
+	}
+	
+	public boolean isEmpty() {                // is the queue empty?
+		return first == null;
+	}
+	public int size() {                       // return the number of items on the queue
+		return n;
+	}
+	public void enqueue(Item item) {          // add the item
+		if(item == null){
+			throw new java.lang.NullPointerException();
+		}
+		Node<Item> oldLast = last;
+		last = new Node<Item>();
+		last.item = item;
+		last.next = null;
+		oldLast.next = last;
+		if(isEmpty()){
+			first = last;
+		}
+		n++;
+	}
+	public Item dequeue() {                   // remove and return a random item
+		if(isEmpty()){
+			throw new java.util.NoSuchElementException();
+		}
+		return null;
+	}
+	public Item sample(){                     // return (but do not remove) a random item
+		if(isEmpty()){
+			throw new java.util.NoSuchElementException();
+		}
+		return null;
+	}
+	public Iterator<Item> iterator(){         // return an independent iterator over items in random order
+		return new ListIterator<Item>(first, last);
+	}
+	private class ListIterator<Item> implements Iterator<Item>{
+		Node<Item> first;
+		Node<Item> last;
+		
+		public ListIterator(Node<Item> first, Node<Item> last){
+			this.first = first;
+		}
+		public void remove()      { throw new UnsupportedOperationException();  }
+		@Override
+		public boolean hasNext() {
+			return current != null;
+		}
+
+		@Override
+		public Item next() {
+			if(!hasNext()) throw new java.util.NoSuchElementException();
+			Item item = current.item;
+			current = current.next;
+			return item;
+		}
+
+	}
+	public static void main(String[] args){   // unit testing (optional)
+		
+	}
+}

@@ -1,0 +1,38 @@
+import Deque.Node;
+
+public class RandomizedQueue<Item> implements Iterable<Item> {
+	private Node<Item> first;
+	private Node<Item> last;
+	private int n; // size
+	public RandomizedQueue(){                           // construct an empty randomized queue
+		first = null;
+		last = null;
+		n = 0;
+	}
+	private class Node<Item>{
+		private Item item;
+		private Node<Item> next;
+	}
+	
+	public boolean isEmpty() {                // is the queue empty?
+		return first == null;
+	}
+	public int size() {                       // return the number of items on the queue
+		return n;
+	}
+	public void enqueue(Item item) {          // add the item
+		
+	}
+	public Item dequeue() {                   // remove and return a random item
+		
+	}
+	public Item sample(){                     // return (but do not remove) a random item
+		
+	}
+	public Iterator<Item> iterator(){         // return an independent iterator over items in random order
+		
+	}
+	public static void main(String[] args){   // unit testing (optional)
+		
+	}
+}

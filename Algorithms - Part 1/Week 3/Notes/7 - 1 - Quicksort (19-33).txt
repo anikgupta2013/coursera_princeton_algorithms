@@ -1,0 +1,407 @@
+
+So that's a quick implementation of the
+quick sort partitioning method. Now,
+Quicksort itself then it's going to be a
+recursive program that uses that
+partitioning method. First thing we do is
+a public sort method that takes the array
+of comparable items as it's argument.
+We're going to do a shuffle and this
+shuffle is needed to make sure that we can
+guarantee that the performance is going to
+be good. And then they cause a recursive
+method that takes us arguments, the limits
+of the sub array that's going to be
+sorted. So, then partitioning simply does
+the partitioning. Tells us where, which
+element is in position and then
+recursively sorts the less. Part that's
+loaded j - one and then, the right part
+that's j + one to high, that's the
+complete implementation of quick sort.
+Again, as with merge sort, studying the
+recursive trace is instructive and this
+one is kind of upside down as compared to
+merge sort. The first line shows the
+partitioning where k is put in the
+position. Then, the method calls the sorts
+for the left of files first and then,
+that's going to be partition on this e and
+so forth, and eventually we get down to
+small sub-files actually our code doesn't
+do anything at all for sub-arrays of size
+one so, we'll just leave those in gray and
+then it does the right sub-file and so
+forth. Again studying a trace like this,
+it gives a good feeling for exactly what's
+going on in the recursive programs. Let's
+look at the animation of Quicksort in
+operation. As the partition that's working
+on the left. Now it's partitioning on the
+right now it's working on the left part of
+the right. Now it's partitioning with
+left, knowing left part of that. And
+working from left to right but dividing
+each sub array and half as it goes. So
+let's look, consider some of the details
+and implementation of partitioning with
+Quicksort. So first thing is, partitions
+in place, you could use an extra array and
+the partitioning code would be a little
+bit easier but one of the big advant ages
+of Quicksort over Merge Sort is that it
+doesn't take any extra space. It gets the
+sort done in place. Now you have to be a
+little bit careful with terminating the
+loop. We give you working code. It's not
+hard to see why it works and you might go
+through the exercise of trying to
+implement quick sort without looking at
+our code. And you'll find the testing,
+when the pointers cross can be a little
+bit tricky particularly in the presence of
+duplicate keys. Also staying in balance.
+Actually in our implementation, the test
+of the j pointer running off the left end
+is redundant. Why is it redundant? Well,
+the partitioning element sitting there and
+it'll stop and hits the partitioning
+element. But the other test is not in our
+implementation. [cough] And the key thing,
+one key thing is that the way that these
+implementations work if the. The file is
+the array is randomly ordered. Then, the
+two sub-arrays, after partitioning will
+also be randomly ordered. Actually, some
+implementation of quick sort on the while,
+don't have this property and they suffered
+a little bit in performance. That random
+shuffle at the beginning is important and
+needed for guaranteeing performance. And
+the other thing I've referred to but not
+talk about a detail is the presence of
+equal keys. You might think it would be
+better to handle equal keys in some
+special way and we'll talk about that in a
+second but this general purpose
+implementation stops the pointers on keys
+equal to the partitioning n key and we'll
+take a look why that's important in a
+minute. So now let's look at the running
+time estimates about why we care about
+Quicksort versus Merge Sort. This is
+extending the table we looked at last time
+then you could see over in the right
+column here Quicksort is quite a bit
+faster than Merge Sort. And again, a good
+algorithm is much better than having a
+super computer even on your PC you can
+sort huge array of a million items in less
+than a second and a billion items in o nly
+a few minutes. So again. This time, sort
+of timing is why quick sort is so widely
+used cuz its simply just faster than merge
+sort. Well, in the best case quick sort
+will divide everything exactly in half and
+that makes it a kind of like merge sort,
+it's about n log n. The worst case, if the
+random shuffle winds up putting the items
+exactly in order, then partitioning
+doesn't really do anything except find the
+smallest, peel off the, the smallest item
+kind of discover that everything to the
+right is greater. That's a bad case but if
+we shuffled randomly, it's extremely
+unlikely to happen. And most interesting
+thing about the study of quick sort is the
+average case analysis. This is a somewhat
+detailed mathematical derivation but it's
+worthwhile going through the steps and
+really get a feeling for why it is that
+quick sort is quick. So what we do is, as
+we did for Merge Sort is write down
+mathematical recurrence relation that
+corresponds to what the program does. In
+the case of Quicksort, the number of
+comparisons taken to sort n items is n +
+one for the partitioning. Plus what
+happens next depends on what the
+partitioning element was. If the
+partitioning element is k. Any particular
+value happens with probability 1/n and if
+it's k then the left sub file has k - one
+items in it and the right sub file has n -
+k items in it. So, every value of k, if
+you add those up. Now, the probability
+that the partitioning elements is k plus
+the cost for the two sub-files, we get
+this equation. This looks like a fairly
+daunting equation but actually, it's not
+to difficult to solve. First thing we do
+is juts multiply by n and collect terms.
+So, ncn n(n + one). And then, these terms
+every size appears twice. So, it's twice
+the sum of c0 to cn - one. It's a simpler
+equation already. Now what we can do is
+get rid of that sum by subtracting the
+same equation for n - one. So, ncn -n -
+1cn - one and then n, n + one - n - one n
+is just 2n. And then the sum collapses
+just leaving the last term. This minus the
+same sum for n - one just leaves 2cn -
+one. Now that's looking like a much
+simpler equation. Re-arrange the terms. So
+we get n + one, cn - one. And then divide
+by n(n+1), that's kind of a magic step.
+But we'll see that makes it possible to
+solve the equation easily. Because that
+equation with c/n + one + c - 1/n is an
+equation that telescopes the first term at
+the right. Is the same as the term on the
+left so we can apply the same equation so
+it's 2/n + one or we apply 4/n - one. We
+get one less here with throw out of 2/n
+and continue that way throwing out two
+over decreasing numbers all the way down
+until we get down to two elements or c1
+which is zero. Substitute the previous
+equation telescope and then that gives us
+an easy sum that we can approximate by
+integral, it's 1/x from 3n + one and
+that's a pretty close approximation. In
+this case and that approximation gives us
+it's about 2n + one natural log n
+comparisons for quicksort about 1.39n log
+n. That's the average number of comparison
+taken by quick sort. And actually the, for
+a random permutation of the input element
+which is what we do with the shuffle the
+[cough] the expected number of comparisons
+is concentrated around this value. It's
+very likely to be very near this value as
+n is large. So the worst case Quicksort is
+quadratic. So, complexity is going to tell
+us that it's a quadratic algorithm, that's
+what it's the worst cases. But, with
+random, the random shuffle is more likely
+that this lecture [inaudible] because of
+the lightning striker. Your computer will
+be struck by a lightning bolt. So we can
+discount that. The average case which is
+extremely likelihood for any practical
+application so going to be about 1.39 n
+log n. So, that's more compares that merge
+sort uses but Quicksort is much faster
+because it doesn't do much corresponding
+to each compare. Just does the compare and
+increment a pointer which merge sort have
+to move the items into auxil iary array
+which is more expensive. So the random
+shuffle is a key for good performance in a
+quick sort and it gives us the guarantee
+that the worst case is not going to happen
+and also allows us to develop a math model
+that we can go ahead and validate with
+experimentation. You run quick sort and
+you can kind of compares. If you did the
+random shuffle it would be about 1.39n log
+in compares and its running time will be
+proportional to analog n and it would be a
+fast sort. And that's what people do and
+that's why people use it. Now there are
+some things that you have to watch out for
+with Quicksort because the implementation
+is a bit fragile and it's easy to make
+mistakes and you'll find text of, what
+implementations or implementations out in
+the web that wind up running in quadratic
+time in certain situations. You have to be
+a little bit careful of that and even if
+everything is randomize, if there's lots
+of duplicates in the implementations not
+done quite right, the Quicksort might take
+quadratic time. Welcome back. Today, we're
+going to look at quick sort. That was
+named of the most important algorithms of
+the twentieth century and was widely used
+for system sorts and many other
+applications. Last lecture, we looked at
+merge sort and other classic sorting
+algorithm that's used in many systems and
+today, we're going to look at quick sort
+which is used in many others. You can even
+get a quick sort t-shirt nowadays. So what
+is the quick sorting method? It's also a
+recursive method but the basic idea behind
+Quicksort is that it does the recursion
+after it does the work was merge sort done
+it before. So the idea is first randomly
+shuffle the array and that's an important
+step that we'll talk about later. And then
+partition the array. So that's to divide
+it so that for some value j, the entry
+a(j) is in place in the array. There's no
+larger entry to the left of j and no
+smaller entry to the right of j. Once we
+have the array partition in that way shown
+here in the middle. Right h ere we have k
+in its position and we have everybody to
+the left. There is nobody greater than k.
+Everybody in the right, there's nobody
+less. Once we have it arrange in that way
+then we recursively sort the two parts.
+Sort the left part, sort the right part.
+And then after those two things are done,
+the whole thing is sort. This method was
+invented in 1961 by Tony Hoar who won the
+Turing Award in 1980 for this another
+work. So, let's look at the demo of how
+quick sort partitioning works. The idea is
+to arbitrarily chose the first element to
+the partitioning elements since we
+shuffled the array, that's our random
+element from the array and then we're
+going to maintain an i pointer that moves
+from left to right and a j pointer that
+moves from right to left. Let's look how
+it works in the demo. So we start again by
+picking k as the partitioning element. And
+then our method is to move the i pointer
+from left to right. As long as what we
+have is less than a partitioning element
+and move the j pointer from right to left,
+as long as it points to an item that's
+greater than a partitioning element. So,
+in this example, while i pointer stops
+right away because it's pointing to an r
+which is bigger than the partitioning
+element, j pointer decrements until it
+gets to the c which stops there because
+that's less than a partitioning element.
+And so now, what's going to happen is
+those two elements are out of place the
+partitioning elements in between them and
+they're in the wrong order. So, what we
+want to do is exchange those. And then
+move on. Now we increment i as long as
+it's pointing to an element that's less
+than the partitioning element. Stop here
+at k cuz that's bigger and now we
+decrement j as long as it's pointing to
+something that's bigger than the
+partitioning element. Stop here at i
+because that's less. Again, t and i are in
+the wrong places. If we exchange them,
+we'll maintain the variant that everything
+to the left of i is less than the
+partitioning element. Nothing to the left
+of i is greater th an partitioning element
+and nothing to the right of j is less than
+the partitioning element. So let's
+summarize the properties of quick sort.
+Its in place, it doesn't use any extra
+space. The depth pf recursion so that's
+[cough] Again dependant on the. Random
+shuffling is going to be logarithmic. You
+can limit the depth of recursion by always
+doing the small sub array before the
+larger sub array but that's not really
+necessary nowadays as long as you've done
+the random shuffle. Oh, and by the way
+quick sort is not stable. Cuz partitioning
+does one of those long range exchanges
+that might project a key with equal value
+over a key another key with the same
+value. So it's a little more worked to
+make quick sort stable. It maybe using
+extra space. So, what about actually in
+practice. This is our fastest sorting
+algorithm and there's a few ways to make
+it even faster and these, we look at some
+similar things for the merge sort and its
+definitely worthwhile taking implementing
+for quick sort. First thing is small sub
+arrays. Even quick sort has more over head
+that anyone for a tinier array like the
+size of two or three or four. So can
+implement it to, cut off to, insertion
+sort for small arrays and the exact
+number. That uses is not too critical
+anywhere between ten and twenty will
+improve the running time by maybe twenty%.
+Also you could just not do anything for
+small arrays and then do the insertion
+sort at one pass at the end. So that's the
+first improvement. Second improvement is
+to try to estimate the partitioning
+element to be near the middle read than
+just arbitrarily using the first element
+which on average would be at the middle.
+So one thing that we can do is sample the
+items and then take a medium of the
+sample. And that's actually not worth the
+cross for large samples usually. But, for
+three it's worth while. Slightly reduces
+the number of compares. Increases the
+number of exchanges paradoxic ally cuz
+more exchanges are required when the
+partitioning is right in the middle. So
+that'll also improve the running time by
+maybe ten%. So this is a summary of the
+optimize Quicksort with cut off to small
+sub files [cough] and reading the three
+partitioning. So partition usually happens
+pretty close to the middle when you do
+that sample in meeting the three. And then
+small sub files can just be left unsorted
+to be picked up with insertion sort right
+at the end. So this gives feeling for the.
+Number of items that have to be touched
+during quick sort and a kind of
+explanation of how it gets the sort so
+quickly. That's a summary of quick sort
+the best sorting algorithm that we've seen
+to date. So exchange them. Increment I as
+long as it's less, stop at l. Increment j
+as, decrement j as long as it's greater.
+Stop at e, those two elements are out of
+position so exchange them. Now increment
+I, stop at the L which is greater than k,
+decrement j. Stop at e which is less than
+k and now at this point the partitioning
+process is complete cuz the pointers have
+crossed and we've looked everything in the
+array. In fact J points to the rightmost
+element than the left sub-files,
+everything that's not greater than k. So,
+we can just exchange j with our
+partitioning element and now, we have
+achieved the goal of partitioning the
+array so that a(j) in this position,
+nobody to the left is greater, nobody to
+the right is less. Now, the code for
+partitioning is straight forward to
+implement, down below shows the state of
+the array before partitioning during and
+after partitioning. So, in the end, the j
+pointers pointing to the partitioning
+element v which was in the position v in
+the first place. And all during the
+partitioning process, the code is
+maintaining this invariant where
+everything to the left of j is equal of v,
+everything to the right of j is greater or
+equal to v and we haven't looked at things
+in between. So trying to, incrementing i
+as long as it's less. It's a simple while
+loop and then we put a test to make sure
+we don't run off at the right end of the
+array. And decrementing j as long as it's
+pointing to a bigger element similarly
+just to while loop or we put in a test to
+make sure we don't run off the left end of
+the array. Then there's a test to see if
+the pointers cross, swap the elements at i
+and j. When we get to the pointers cross
+we break out of the loop and exchange the
+partitioning element into position.

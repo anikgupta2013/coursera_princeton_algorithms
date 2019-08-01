@@ -1,0 +1,71 @@
+import java.util.Iterator;
+
+public class RandomizedQueue<Item> implements Iterable<Item> {
+	private Item[] q;
+	private int first;
+	private int last;
+	private int n; // size
+	public RandomizedQueue(){                           // construct an empty randomized queue
+		q = (Item[]) new Object[2];
+		first = 0;
+		last = 0;
+		n = 0;
+	}
+
+	
+	public boolean isEmpty() {                // is the queue empty?
+		return n == 0;
+	}
+	public int size() {                       // return the number of items on the queue
+		return n;
+	}
+	public void enqueue(Item item) {          // add the item
+		if(item == null){
+			throw new java.lang.NullPointerException();
+		}
+		
+	}
+	public Item dequeue() {                   // remove and return a random item
+		if(isEmpty()){
+			throw new java.util.NoSuchElementException();
+		}
+		return null;
+	}
+	public Item sample(){                     // return (but do not remove) a random item
+		if(isEmpty()){
+			throw new java.util.NoSuchElementException();
+		}
+		return null;
+	}
+	private void resize(int newSize){
+        Item[] temp = (Item[]) new Object[newSize];
+        for(int i = 0; i < n; i++){
+        	temp[i] = q[(first+i) % q.length];
+        }
+        q = temp;
+	}
+	public Iterator<Item> iterator(){         // return an independent iterator over items in random order
+		return new ListIterator<Item>();
+	}
+	private class ListIterator<Item> implements Iterator<Item>{
+		
+		public ListIterator(){
+			
+		}
+		public void remove()      { throw new UnsupportedOperationException();  }
+		@Override
+		public boolean hasNext() {
+			return false;
+		}
+
+		@Override
+		public Item next() {
+			if(!hasNext()) throw new java.util.NoSuchElementException();
+			return null;
+		}
+
+	}
+	public static void main(String[] args){   // unit testing (optional)
+		
+	}
+}

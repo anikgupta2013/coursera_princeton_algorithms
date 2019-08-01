@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8" />
+<title>Quiz</title>
+
+<link rel="stylesheet" href="https://class.coursera.org/assets/core/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://class.coursera.org/assets/core/css/main.css?v=08272012" />
+<link rel="stylesheet" href="https://class.coursera.org/assets/core/css/font-awesome.css" />
+<script type="text/javascript" src="https://class.coursera.org/assets/core/js/jquery.js"></script>
+<script type="text/javascript" src="https://class.coursera.org/assets/core/js/json.js"></script>
+<script type="text/javascript" src="https://class.coursera.org/assets/core/js/hc_fix.js"></script>
+<script src="https://class.coursera.org/assets/core/js/bootstrap/bootstrap-modal.js" type="text/javascript"></script>
+<script src="https://class.coursera.org/assets/core/js/modal_focus.js" type="text/javascript"></script>
+<script src="https://class.coursera.org/assets/core/js/bind_modal_focus.js" type="text/javascript"></script>
+<script src="https://class.coursera.org/assets/core/js/top_nav_bar.js" type="text/javascript"></script>
+<script src="https://class.coursera.org/assets/app/quiz/js/quiz_timer.js"></script>
+<script src="https://class.coursera.org/assets/core/js/get_query_parameters.js?version=20120326"></script>
+<script src="https://class.coursera.org/assets/app/quiz/js/attempt.js?version=20120905"></script>
+<link rel="stylesheet" href="https://class.coursera.org/assets/app/quiz/css/quiz_questions.css" />
+<script src="https://class.coursera.org/assets/core/js/mathjax2/MathJax.js?config=default"></script>
+<script src="https://class.coursera.org/assets/app/quiz/js/latex_preview.js?version=20120830"></script>
+<script src="https://class.coursera.org/assets/app/quiz/js/db_class.js?version=20120830"></script>
+<link rel="stylesheet" href="https://class.coursera.org/assets/app/quiz/css/quiz.css" />
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28377374-1']);
+  _gaq.push(['_setDomainName', 'coursera.org']);
+  _gaq.push(['_setAllowLinker', true]);  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  window._204 = window._204 || [];
+  window._204.push({key:"pageview", val:{}});
+
+  (function()
+  {
+    var a = document.createElement('script'); a.type = 'text/javascript'; a.async = true;
+    a.src = 'https://eventing.coursera.org/204.min.js?client=spark&user=1310051';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(a, s);
+  })();
+
+</script>
+<link rel="icon" href="https://spark-public.s3.amazonaws.com/algs4partI/static/images/favicon.ico" />
+
+</head>
+
+<body>
+    <a href="#page-content" class="hidden">Skip Navigation</a>
+    <div class="hidden">
+        This page features MathJax technology to render mathematical formulae.
+        If you are using a screen reader, please visit <a href="http://www.dessci.com/en/products/mathplayer/">MathPlayer</a> to download the plugin for your browser. Please note that this is an Internet Explorer-only plugin at this time.
+    </div>
+
+    <h1 class="hidden">Algorithms, Part I</h1>
+
+	
+<div class="coursera_topbar"
+ >
+    <h2 class="hidden">Top Navigation Bar</h2>
+
+    <div class="coursera_navbar_container">
+        <ul class="coursera_toplevel_nav" id="coursera_topbar">
+            <li class="coursera_top_item"><a href="https://www.coursera.org/courses/" target="_new">Courses</a></li>
+
+            
+            <li class="coursera_top_item">
+                <a href="#" rel="dropdown_aboutus" style="cursor:hand">About <i class="icon-caret-down"></i></a>
+            </li>
+
+                        
+            <li class="coursera_top_item">
+                <a href="#" rel="dropdown_my" data-user-id="1310051">Aanchal Gupta <i class="icon-caret-down"></i></a>
+            </li>
+            
+                    </ul>
+    </div>
+
+    <ul id="dropdown_aboutus" class="coursera_submenu_nav">
+        <li class="coursera_sub_item"><a href="https://www.coursera.org/about/jobs" target="_new">Jobs</a></li>
+        <li class="coursera_sub_item"><a href="https://www.coursera.org/about/team" target="_new">Team</a></li>
+        <li class="coursera_sub_item"><a href="https://www.coursera.org/about/contact" target="_new">Contact Us</a></li>
+        <li class="coursera_sub_item"><a href="https://www.coursera.org/about/" target="_new">About Us</a></li>
+    </ul>
+
+    <ul id="dropdown_my" class="coursera_submenu_nav">
+        <li class="coursera_sub_item"><a href="https://www.coursera.org/" target="_new">Courses</a></li>
+        <li class="coursera_sub_item"><a href="https://www.coursera.org/account/profile" target="_new">Profile</a></li>
+        <li class="coursera_sub_item"><a href="https://www.coursera.org/account/settings" target="_new">Settings</a></li>
+        <li class="coursera_sub_item"><a href="https://class.coursera.org/algs4partI-2012-001/class/preferences">Course Preferences</a></li>
+        <li class="coursera_sub_item"><a href="https://class.coursera.org/algs4partI-2012-001/auth/logout">Logout</a></li>
+    </ul>
+
+    <div class="coursera_logo_container">
+        <a href="https://www.coursera.org/">
+        <img id="coursera_topbar_logo" src="https://class.coursera.org/assets/core/images/topbar-coursera-logo.png" alt="Coursera">
+        </a>
+    </div>
+
+</div>
+
+
+<div id="banner-top" style="background:repeat-x url('https://s3.amazonaws.com/coursera/universities/princeton/top-banner-background.png')">
+    <div id="course-logo-text">
+        <a href="https://class.coursera.org/algs4partI-2012-001/class/index">
+            <div>
+                <div>
+                    <img src="https://s3.amazonaws.com/coursera/universities/princeton/top-banner.png" />
+                </div>
+                <div class="course-logo-image" style="position:absolute;top:47px;left:17px;height:68px;width:120px;">
+                    <div style="background-position:-5px 0px;background-size:130px;height:68px;width:120px;background-image:url('https://s3.amazonaws.com/coursera/topics/algs4partI/small-icon.hover.png')">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="course-logo-name" style="position:absolute;top:87px;left:155px;">
+                <nobr>Algorithms, Part I</nobr>
+            </div>
+        </a>
+    </div>
+    <div id="banner-course-info">
+        <div class="course-instructor-name">Robert Sedgewick<br>
+Kevin Wayne</div>
+        <div class="course-time"></div>
+    </div>
+</div>
+    
+        <div class="container-fluid">
+        <div class="sidebar page-sidebar" id="page-sidebar">
+            <h2 class="hidden">Side Navigation Bar</h2>
+<ul style="list-style-type:none;margin-left:0px;">
+		<li>
+		<p class="navbar_item navbar_home">
+				<a href="https://class.coursera.org/algs4partI-2012-001/class/index"  >
+			Home		</a>
+				</p>
+	</li>
+		<li>
+		<p class="navbar_item navbar_wiki">
+				<a href="https://class.coursera.org/algs4partI-2012-001/wiki/view?page=Syllabus"  >
+			Syllabus		</a>
+				</p>
+	</li>
+		<li>
+		<p class="navbar_item navbar_wiki">
+				<a href="https://class.coursera.org/algs4partI-2012-001/wiki/view?page=Schedule"  >
+			Schedule		</a>
+				</p>
+	</li>
+		<li>
+		<p class="navbar_item navbar_wiki">
+				<a href="http://algs4.cs.princeton.edu" target="_blank" >
+			Booksite		</a>
+				</p>
+	</li>
+		<li>
+		<p class="navbar_item navbar_lecture">
+				<a href="https://class.coursera.org/algs4partI-2012-001/lecture/index"  >
+			Lectures		</a>
+				</p>
+	</li>
+		<li>
+		<p class="navbar_item navbar_quiz">
+				<a href="https://class.coursera.org/algs4partI-2012-001/quiz/index"  >
+			Exercises		</a>
+				</p>
+	</li>
+		<li>
+		<p class="navbar_item navbar_assignment">
+				<a href="https://class.coursera.org/algs4partI-2012-001/assignment/index"  >
+			Programming Assignments		</a>
+				</p>
+	</li>
+		<li>
+		<p class="navbar_item navbar_quiz">
+				<a href="https://class.coursera.org/algs4partI-2012-001/quiz/index?quiz_type=homework"  >
+			Job Interview Questions		</a>
+				</p>
+	</li>
+		<li>
+		<p class="navbar_item navbar_forum">
+				<a href="https://class.coursera.org/algs4partI-2012-001/forum/index"  >
+			Discussion Forums		</a>
+				</p>
+	</li>
+			<li style="padding-top:20px;">
+		<p class="navbar_item navbar_wiki">
+		<a href="http://www.meetup.com/Coursera/" target="_blank">
+			Join a Meetup
+		</a>
+		</p>
+	</li>
+		</ul>
+
+        </div>
+        <div class="content page-content" id="page-content">
+            
+<script>
+initRunQuery('.test_query', 'run_query');
+</script>
+	
+<h2>
+ 
+Exercises: Analysis of Algorithms</h2>
+
+
+<form method="post" id="quiz_form">
+
+<div class="quiz_preamble">
+	<pre style="background-color:transparent;">To specify an array or sequence of values in an answer, you must separate the values by a single space character (with no punctuation and with no leading or trailing whitespace). For example, if the question asks for the first ten powers of two (starting at 1), the only accepted answer is:
+
+1 2 4 8 16 32 64 128 256 512
+
+If you wish to discuss a particular question and answer in the forums, please post the entire question and answer, including the seed (which is used by the course staff to uniquely identify the question) and the explanation (which contains the correct answer).</pre></div>
+
+<div class="quiz_question_body">
+<h3 class="quiz_question_number">Question 1</h3>
+<div style="float:none;text-align:left;width:100%"> <div class="quiz_question_text">
+<pre style="background-color:transparent;">(seed = 19968)
+Download http://coursera.cs.princeton.edu/algs4/Timing.class
+
+Using the value 19968 for the seed, estimate the order of growth of the running time
+of the function call Timing.trial(N, seed) as a function of N. To do so, write a program that
+calls Timing.trial(N, seed) for different values of N and measures how long each function call
+takes (e.g., via the Stopwatch library in algs4.jar). Then, formulate a doubling hypothesis to
+estimate the order of growth.
+
+Assume that the running time obeys a power law T(N) ~ a N^b. For your answer, enter the
+constant b. Your answer will be marked as correct if it is within 5% of the target answer -
+we recommend using two digits after the decimal separator, e.g., 2.34.</pre>
+</div>
+</div>
+<label for="gensym_5060ac76ab03f" class="hidden">Answer for Question 1</label><div class="quiz_options"></div>
+<textarea id="gensym_5060ac76ab03f" class="quiz_input" name="answer[Question 198][answer]"></textarea>
+</div><div class="quiz_question_body">
+<h3 class="quiz_question_number">Question 2</h3>
+<div class="quiz_question_text">
+<pre style="background-color:transparent;">(seed = 329152)
+What is the order of growth of the worst case running time of the following code fragment
+as a function of N?
+
+int sum = 0;
+for (int i = 1; i &lt;= N; i++)
+    for (int j = 1; j &lt;= i*i; j++)
+        sum++;
+</pre>
+</div>
+<div class="quiz_options">
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76af9a4" value="Option 43"><label for="gensym_5060ac76af9a4" style="cursor:pointer;">log N</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76aff4e" value="Option 44"><label for="gensym_5060ac76aff4e" style="cursor:pointer;">N^1/2</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b04c2" value="Option 45"><label for="gensym_5060ac76b04c2" style="cursor:pointer;">N</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b0a45" value="Option 46"><label for="gensym_5060ac76b0a45" style="cursor:pointer;">N log N</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b0fa5" value="Option 47"><label for="gensym_5060ac76b0fa5" style="cursor:pointer;">N^3/2</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b14f9" value="Option 48"><label for="gensym_5060ac76b14f9" style="cursor:pointer;">N^2</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b1a7f" value="Option 49"><label for="gensym_5060ac76b1a7f" style="cursor:pointer;">N^5/2</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b2115" value="Option 50"><label for="gensym_5060ac76b2115" style="cursor:pointer;">N^3</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b2679" value="Option 51"><label for="gensym_5060ac76b2679" style="cursor:pointer;">N^4</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b2bfe" value="Option 52"><label for="gensym_5060ac76b2bfe" style="cursor:pointer;">N^5</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b315c" value="Option 53"><label for="gensym_5060ac76b315c" style="cursor:pointer;">N^6</label>
+</div>
+<div class="quiz_option">
+<input class="quiz_input" type="radio" name="answer[Question 10][]" id="gensym_5060ac76b36b8" value="Option 54"><label for="gensym_5060ac76b36b8" style="cursor:pointer;">N^7</label>
+</div>
+</div>
+</div><div class="quiz_question_body">
+<h3 class="quiz_question_number">Question 3</h3>
+<div style="float:none;text-align:left;width:100%"> <div class="quiz_question_text">
+<pre style="background-color:transparent;">(seed = 641792)
+Given the following definition of a MysteryBox object: 
+
+public class MysteryBox {
+    private double x0, x1;
+    private int y0, y1, y2, y3;
+    private long z0, z1;
+    private boolean[] a = new boolean[64];
+
+    ...
+}
+
+Using the 64-bit memory cost model from lecture, how many bytes does each object of type MysteryBox use?</pre>
+</div>
+</div>
+<label for="gensym_5060ac76b484d" class="hidden">Answer for Question 3</label><div class="quiz_options"></div>
+<textarea id="gensym_5060ac76b484d" class="quiz_input" name="answer[Question 137][answer]"></textarea>
+</div>
+    <div class="quiz_submit_button_div">
+                <div class="pull-left" style="text-align: left;"></div>
+        <input type="hidden" name="__csrf-token" value="fMth91KqTmlrzCfnItxo">
+    <input class="btn success" type="submit" name="submit_answers" 
+           value="Submit Answers" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <input class="btn primary" type="submit" name="save_answers" 
+           value="Save Answers" />
+    </div>
+
+</form>
+        </div>
+    </div>
+            <script src="/site-assets/js/coursera-libs/profiles.js?version=09142012" type="text/javascript"></script>
+</body>
+
+</html>

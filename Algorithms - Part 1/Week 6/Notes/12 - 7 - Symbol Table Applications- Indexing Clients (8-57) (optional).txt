@@ -1,0 +1,161 @@
+
+Here's another simple client program for
+symbol tables related to indexing. Again
+another common function that's easily
+handled by symbol tables. There's all
+kinds of cases where we just have a lot of
+information, maybe on our PC or all over
+the web. And we want to create an index
+that allows us to specify a search key and
+get all the associated information. And
+you've, you've used programs like this on
+your computer in many instances most
+likely. So, more generally, here's the
+goal. So we're going to have a, a list of
+files, that are specified, and then. And
+maybe it's all files on a computer, or
+maybe it's specified in, in some other
+way. And what we want to do is create an
+index, so that we can efficiently find all
+the files that contain a given query
+string. So, in this small example, so our
+client is going to be called file index.
+And in this small example, say, we're
+going to have five text files. And these
+are just, pieces of literature. And so
+what we want to do is, build an index from
+that set of text files. And then given a
+key, a string key, we want it to print out
+the files that might contain that key. So
+for example, the word freedom appears in
+the Magnacarta and in Moby Dick, and in
+Tale of Two cities. All three of them, but
+not in Tom Sawyer, and not in Aesop's
+Fables. The word whale appears only in,
+Moby Dick. The word lamb appears both in
+Tom Sawyer and Aesop Fables, and so forth.
+So we're looking for a piece of
+information somewhere on the computer, and
+it'll give us the names of the files that
+contain that information. So, with a, more
+complex user interface, this is very much
+what the spotlight or find function on
+your computer is doing. And a programmer
+might use the same program to find places
+to find places where certain programming
+terms are used and a bunch of programs.
+So, normally we have a bunch of dot java
+files when we're working on an application
+like these are all the ones associated
+with this lecture so we might build an
+index from that set of files and then we
+might wonder well where do we use the
+import statements. So we just search for
+import and it will tell us look in those
+three files or did we use comparators
+anywhere here? This index will tell us no.
+So again a very general capability,
+that's, that's got lots and, lots and,
+lots of applications an easy to implement
+with our symbol table API. And the idea
+is, what we are going to do is, associate
+keys with values, so while the key is the
+string we type, whats the value? Well,
+what we are going to use for value is, a
+set of files, the files that contain the
+query string. So just given that high
+level description, then the implementation
+is pretty direct. Here's the
+implementation of file index using our
+symbol table implementation. So now we're
+going to build a symbol table that
+associates string keys with sets of files.
+So this creates a new symbol table
+associating string keys with sets of
+files. So first thing we do as before is
+build the index. So, we're going to take,
+this time we're going to take the list of
+file names from the command line. And for,
+each file we're going to create an input
+stream. We're going to read every word in
+the file. If the symbol table contains,
+does not contain the word. We'll, create a
+new set for that word, and put that into
+the symbol table. And then, we simply get
+the set. Associated with the key, and add
+the new word to that set, the new file
+name to that set. So this one, for each
+word in the file, it'll add that file name
+to the corresponding set for that word.
+That's building a symbol table associating
+keys with sets of files. And then
+processing queries is the same as before.
+As long as standard in is not empty, we
+take a query, and then simply print out.
+The set of strings associated with that
+word which is a list of file names. Again,
+using our symbol table API, very easy to
+set up an indexing client that's useful in
+lots of applications like this one.
+[laugh] Sorry about that. [laugh]. I
+thought that was the end. Start here.
+[laugh]. This one. Yeah this one's good.
+[inaudible] Yeah, oka Y. >> This is slide
+number. Okay. >> Three, two. >> So again,
+our symbol table API gives a very easy way
+to implement this file indexing function
+which is very widely useful and similarly
+may be we want to build a book index,
+maybe for a real book or maybe for an
+eBook or more generally, people want to
+often process, pre-process text and maybe
+a huge amount of text, to support so
+called concordance queries. So what you
+want to do is, given a word you want to
+find all the occurrences of that word
+along with immediate context. The context
+just means, a few words before and few
+words after. So for example, in Tale of
+Two Cities, the word cities, actually,
+only appears, in this one place and this
+is the. Context, that it appears with the
+four words, tongues of the two before and
+that were blended in after. The word
+majesty appears in three places. And
+there's the, there's the context. And
+well, this is a very special case of what
+you're very familiar with in web searches.
+You type in, a word, and then you get
+places that, where that word appears in
+context. Again, our symbol table API
+provides for an easy way to implement
+this. This is a, an Concordance client
+that, that does the job. Now what we want
+to do is read text, and we want to build
+an index for each word. So this is a Java
+construct for reading, all the strings on
+input stream, on standard input and
+splitting them by blank space and putting
+them into array. So now all the words, are
+in an array on standard input and then
+we're going to create a new symbol table
+that associates strings with sets of
+integers. And again the string is the key
+and the sets of integers are going to be
+the places in the array. Where the given
+word appears. So we go through all the
+words and pick out our key S. And again,
+if It's not there yet we create a new set
+associated with that, S. And then
+afterwards we go ahead and get that set
+and put the new index on that set. And
+then, that allows us to process queries.
+Where we take a query, and then get the
+set of indices associated with th at
+query. And then we left out the, left out
+the code where, you print out the nine
+words that you want. The four to the left,
+and the four to the right. Again, quite
+useful and familiar functionality and very
+easy to implement with our symbol table
+client.
