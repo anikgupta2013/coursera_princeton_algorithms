@@ -1,0 +1,272 @@
+
+Next we are going to look at, turn a
+research price, which another data
+structure, that, new data-structure that
+responds to the problems of too much
+memory space, moved by RY trace.
+This is a very, easy to describe and
+implement, data structure.
+And it came out of the same paper that
+John Bentley and I wrote in the 1990s.
+When, we developed, the 3-way itinerary
+quick sort.
+The idea is now we're going to actually
+store characters in nodes, and values.
+But we're not going to store whole keys in
+there,
+Just characters.
+But we're not going to use this idea of a
+big array where a nominal link is the
+implicit, value of a character.
+We're actually going to store the
+characters but what we're going to do is
+make each node have three children.
+Not two like in a binary search string,
+not r like in an r way try, but exactly
+three.
+And the three children are for the tri
+corresponding to smaller keys, the tri
+corresponding to trees that start with the
+same character, and the tri corresponding
+to larger trees.
+And just given this description and
+experience with many of the data
+structures that we've talked about already
+in this course many of you could go off
+and implement this data structure.
+And we'll see how simple the
+implementations are but still let's work
+through precisely what the data structure
+looks like can, sometimes the regressive
+code looks almost too simple and kind of
+mass understanding.
+So, this is the representation of tries
+that we started with and all we do with
+ternary search trees is, it's almost like
+having a binary search tree representation
+of the non-null links for every node.
+So in this case, we're going to have an S
+at the root and that depends on the order
+in which the keys are inserted.
+And the key idea is the middle link coming
+off the root node, is a link to the TST
+that have all the keys that start with S,
+with S stripped off.
+Now but for the left and right links,
+those are for teeth that start with some
+letter, that appears for four S on the
+left and after S on the right.
+And then say, on the left, the node for B
+is, if you go down this length, it's all
+the keys that start with B.
+Otherwise, the B is just a divide the ones
+that are left from the ones that are
+bigger and so forth.
+And again, if you search for a key by say
+lets search for SHE.
+So that's going down middle lengths and
+matching keys.
+And some nodes will have values associated
+with them.
+That is the value associated with the last
+character in the search key.
+That's what the data structure looks like
+and began to describe the search
+algorithm, it's quite simple given the
+definition of the data structure.
+Again, we follow links corresponding to
+each character of the key.
+If we have a character that's less than
+the character in the node we go left.
+If we have one that's greater we could go
+right.
+And if it's equal we move to the next
+character and take the middle link.
+So this is an example of a search for SEA
+Start with S.
+That's a match.
+We take the middle link.
+Now the next character is E.
+That's a mismatch.
+And e is less than h, so we go to the
+left.
+Now we find a node that has E and we
+didn't update our pointer into the key
+character cuz we didn't find a match.
+So we're still looking at the E and now we
+can match that E. So, we go down the
+middle length.
+Now we're looking at the A in the search
+key and that's less than L, so we go to
+the left.
+Now we're still looking at the A in the
+search key and that's a match.
+And it's the last character in the key, so
+we return.
+The value associated with the last
+character in the key.
+So it's the same basic algorithm, that we
+used for tries.
+Except, we just have a different way to
+decide whether we matched a character.
+We explicitly store characters in nodes.
+We follow middle link on a match, and
+update the pointer in our key character.
+Otherwise, we follow the left or right
+link because we know, that the key is
+going to be found in the left or right
+subtree.
+And each, node has exactly three links.
+So here's an example of search, in a TST.
+Again this the example I just talked about
+in a dynamic form, form.
+So the S is, the first character in the
+key matches the s in the first node in the
+tree.
+So we take the middle link, and move on to
+the second character in the key, which is
+E.
+Compare that against H,
+It's not a match.
+In fact, it's less, so we go left.
+So now we're still looking at E and C and
+it's a match with the character and the
+node that we're currently processing, so
+we take the middle.
+And now, in move to the next character in
+the key, which is A.
+And now we take, A compared to L, and A is
+less, so we go left.
+We're still looking at the A.
+Didn't update it cuz it's not a match, and
+now it is a match, and it's the last
+character in the key, so we look at the
+value, and that's the value we return.
+What about unsuccessful search.
+Well lets see how that works for, so for
+shelter, its starts with an S so we start
+with the middle link. second and move to
+the second character.
+Second character is an H and that's a
+match.
+So we take the middle link and move to the
+next character.
+Third character' is an E and third
+character, that's also a match.
+So again, we take the middle link and move
+to the next character.
+Fourth character's an L, that's also a
+match.
+So again, we take the middle link and move
+to the next character.
+Now, the next character is a T, which is
+not a match, so we want to move to the
+right.
+But moving to the right takes us to a null
+link.
+So that means that shelter is not in the
+TST and so we return null.
+Again, every, at every step, what we do is
+completely well defined.
+And any search for a key that's in the TST
+is going to return the associated value,
+any search for any other key is either
+going to go out on a null link or end on a
+node that involves a mismatch.
+So with.
+That basic idea.
+Let's take a more detailed look in a demo
+of how the tree gets constructed.
+In following through this demo, we'll give
+you a pretty good feeling for how these
+trees are constructed.
+So we're going to associate the value zero
+where the string, SHE.
+So again, every time we move to a new
+letter, we have to create a new node,
+until we get to the end of the key.
+In which case, we put the, associate the
+value with the node that contains the last
+character in the key.
+So that's a starting point.
+Keys of sequence of characters down the
+middle lengths.
+That goes to from the root to some node,
+and the value is in the node that
+corresponds to the last character.
+So how do we put a new one in this tree?
+So the in this itinerary search try our
+first character is S so we go down the
+middle.
+Next character is not a match so we go to
+the left and it's null link.
+But we have a node that we want to put
+there.
+That's the one corresponding to the second
+letter in cells.
+So we do that and then we make nodes with
+middle links going until we get to the
+last character in cells, and we associate
+that with the value one.
+So what about SEA, let's see how that one
+works so the first character is S so we
+take the middle link. Second character is
+E which is less than H and not a match so
+we move to the left and continue looking
+for the E.
+Now at this node we find the E so we take
+a middle link and move to the next node
+next character, which is A.
+A is less than L, it's not a match so we
+go to the left.
+That's a no-link, and that's where we put
+our A and we associate it with the value
+two, Okay?
+Here's shells so we have a match at S, go
+to middle length and go to the next
+letter.
+Match at H. Middle link, next letter.
+Then we go down and add the three nodes
+corresponding to the last three letters.
+And put a three at the node corresponding
+to the last letter.
+Okay, now B, Y.
+We look at S.
+Not a match, it's less, so we're going to
+the left.
+That's a null link, that's where we put
+our first character and then we go down
+the middle link to add the node for the
+last character and then associate the
+value four there.
+And then D, similar thing on the right.
+And then we go to the T, then H, and E and
+that gives us our share of the value five.
+Sea.
+Again it's associative so we do the
+search.
+So S is a match so go down the middle link
+and move to the next letter.
+E is less than H so we go, to the left and
+keep looking for E.
+Now, we find these are match so we go down
+the middle link and we move to the next
+user letter that's A which is less than L.
+So, we go to the left to look for A and,
+there we find it.
+And we're building an associative symbol
+table so we, update and overwrite the old
+value with the new value six.
+S, H, O, R, E.
+We match the S, match the H, now we're on
+O.
+That does not match E so we go to the
+right.
+And keep looking for O.
+We don't find it, so we create a new node
+for O, R, and E.
+And then put the value seven in the value
+associated with the last character in that
+key.
+So that's construction of itinerary search
+tree containing eight keys.
